@@ -155,6 +155,3 @@ Temporary Items
 .apdisk
 
 # End of https://www.gitignore.io/api/linux,macos
-
-#data location
-/data

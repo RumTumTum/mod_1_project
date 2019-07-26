@@ -1,0 +1,5 @@
+#ignore csv, tsv, zip, gz
+*.csv
+*.tsv
+*.zip
+*.gz
