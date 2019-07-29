@@ -1,4 +1,4 @@
-"""Reads in movie database files. Methods outputs one Pandas Dataframe"""
+"""Reads in movie database files. Methods output one Pandas Dataframe"""
 
 
 import pandas as pd
