@@ -1,4 +1,10 @@
-"""Reads in movie database files. Methods output one Pandas Dataframe"""
+"""Various methods to support the reading and analysis of movie databases
+
+Includes methods to:
+- Import movie databases
+- Join movie databases
+
+"""
 
 
 import pandas as pd
@@ -6,8 +12,23 @@ import pandas as pd
 def bom_movie_gross():
     #read in the files
     df = pd.read_csv('data/bom.movie_gross.csv')
-    return df
 
+
+    #Convert object in format $10,000 to float64
+    df.foreign_gross = df.foreign_gross.replace(
+        '[\$,]',
+        '',
+        regex=True
+    ).astype(float)
+
+    #add a worldwide_gross column
+    df['worldwide_gross'] = df.foreign_gross + df.domestic_gross
+    
+    #add a movie column to match the column title in tn.movie db
+    df['movie'] = df.title
+
+    return df
+    
     
 def tn_movie_budgets():
     df = pd.read_csv('data/tn.movie_budgets.csv')
