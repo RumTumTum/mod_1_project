@@ -30,7 +30,7 @@ def bom_movie_gross():
     return df
     
     
-def tn_movie_budgets():
+def tn_movie_budgets(cutoff = 1):
     df = pd.read_csv('data/tn.movie_budgets.csv')
 
     #Convert object in format $10,000 to float64
@@ -57,8 +57,43 @@ def tn_movie_budgets():
     #Convert object to str
 #     df.movie = df.movie.astype('str')
 
+    #Sort by revenue
+    df = df.sort_values(
+        by = 'worldwide_gross', 
+        ascending = False)
+
+    #When there are duplicates keep higher revenue record 
+    df.drop_duplicates(
+        subset= 'movie', 
+        keep = 'first',
+        inplace = True
+    )
+
     #pending - convert date to date
-    #pending - convery name to string
-    #having some difficulty converting to str
+
+    #create new df with only movies above the revenue cut-off
+    df_cutoff = df[df['worldwide_gross'] > cutoff]
+    
+    #Cutoff captures xx% of total movie revenue
+#     share_cutoff = df_cutoff['worldwide_gross'].sum() / df['worldwide_gross'].sum()
+#     print( 'cutoff of ', cutoff, " USD captures ", round(share_cutoff,2)*100, "% of total revenue")
+
+    #returns a cleaned and sorted tn_movie_budgets
+    return df_cutoff
+
+def movies_combined (df_1, df_IMDB):
+    df = 1
+    
+    #Copies to avoid overwriting original df_TN
+    df_TN = df_1.copy()
+    
+    #Set 'movie' as index
+    df_TN.set_index('movie', inplace=True)
+    
+    # create new df joining df_TN and df_IMDB
+    df = df_IMDB.join(
+    df_TN,
+    on = 'primary_title',
+    how = 'inner')
     
     return df
