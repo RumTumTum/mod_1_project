@@ -69,8 +69,11 @@ def tn_movie_budgets(cutoff = 1):
         inplace = True
     )
 
-    #pending - convert date to date
-
+    #convert date to date and add month and year
+    df['release_date_format'] = pd.to_datetime(df.release_date)
+    df['year'] = df.release_date_format.map(lambda x: x.year)
+    df['month'] = df.release_date_format.map(lambda x: x.month)
+    
     #create new df with only movies above the revenue cut-off
     df_cutoff = df[df['worldwide_gross'] > cutoff]
     
