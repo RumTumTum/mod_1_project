@@ -24,9 +24,9 @@ def get_imdb():
         bool_list = []
         for movie in imdb_title_basics.genres:
             if genre in movie:
-                bool_list.append('True')
+                bool_list.append(1)
             else:
-                bool_list.append('False')
+                bool_list.append(0)
         genre_dict[genre] = bool_list
     for genre in unique_genres:
         imdb_title_basics[genre] = genre_dict[genre]
